@@ -7,7 +7,7 @@
 class Particle
 {
 public: 
-    Particle(Texture2D& t_screenTexture);
+    Particle();
     int id = -1; // Keeps track of where it is in the queue if pool used fully
 
     void update();
@@ -20,7 +20,7 @@ public:
 
 
 private:
-    Texture2D& screenTexture;
+    void checkBounds();
 
     bool active = false;
 

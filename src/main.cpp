@@ -54,10 +54,11 @@ void GameLoop(void)
 
 
     ClearBackground(BLACK);
-    DrawFPS(0, 0);
 
     // Draw the Game Objects
     game.draw();
+
+    DrawFPS(0, 0);
 
     counter++;
 

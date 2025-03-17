@@ -1,7 +1,6 @@
 #include "../include/Particle.h"
 
-Particle::Particle(Texture2D &t_screenTexture)
-    : screenTexture(t_screenTexture)
+Particle::Particle()
 {
 }
 
@@ -32,25 +31,52 @@ void Particle::update()
 			active = false;
 		}
 	}
+
+	position.x += velocity.x;
+	position.y += velocity.y;
+
+	checkBounds();
 }
 
 void Particle::draw()
 {
-    Rectangle screenSection = { position.x - renderSize / 2.0f, position.y - renderSize / 2.0f, renderSize, renderSize };
-    Rectangle dest = {position.x, position.y, renderSize, renderSize};
-    Vector2 origin = { renderSize / 2.0f, renderSize / 2.0f };
-    DrawTexturePro(screenTexture, screenSection, dest, origin, 0, WHITE);
-
-    DrawCircleV(position, size, color);
+    DrawCircleV(position, size * scale, color);
 }
 
 void Particle::activate(Vector2 t_pos, float t_size, float t_speed, float t_dir, Color t_color)
 {
+	scale = 1.0f;
+	
     position = t_pos;
     color = t_color;
     speed = t_speed;
+
     size = t_size;
+	renderSize = size * 4.0f;
     
     velocity.x = sin(t_dir * DEG2RAD) * speed;
     velocity.y = cos(t_dir * DEG2RAD) * -speed;
+
+	active = true;
+}
+
+void Particle::checkBounds()
+{
+	if (position.x < -100) // Give leeway so that if the camera moves it can still see it
+	{
+		active = false;
+	}
+	else if (position.x > GetScreenWidth() + 100)
+	{
+		active = false;
+	}
+
+	if (position.y < -100) // Give leeway so that if the camera moves it can still see it
+	{
+		active = false;
+	}
+	else if (position.y > GetScreenHeight() + 100)
+	{
+		active = false;
+	}
 }

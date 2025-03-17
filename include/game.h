@@ -15,4 +15,6 @@ private:
     RenderTexture2D screenTexture;
 
     std::unique_ptr<ParticlePool> particlePool;
+
+    std::unique_ptr<ParticleSpawner> spawner;
 };

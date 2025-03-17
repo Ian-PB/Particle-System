@@ -10,13 +10,14 @@ class ParticlePool
 public:
     ParticlePool(Texture2D& t_screenTexture);
 
-    static std::shared_ptr<Particle> requestParticle();
+    static std::shared_ptr<Particle> requestParticle(Vector2 t_pos, float t_size, float t_speed, float t_dir, Color t_color);
 
     void update();
     void draw();
 
 private:
-    static const int POOL_SIZE = 400;
+    Texture2D& screenTexture;
+    static const int POOL_SIZE = 1000;
     static std::shared_ptr<Particle> pool[POOL_SIZE];
 
     static int activeAmount;
