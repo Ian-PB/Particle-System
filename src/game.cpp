@@ -1,19 +1,29 @@
-#include "raylib.h"
-#include "stdio.h"
 #include "../include/game.h"
 
-void InitGame() {
-    printf("Game Initialized!\n");
+void Game::init()
+{
+    screenTexture = LoadRenderTexture(GetScreenWidth(), GetScreenHeight());
+
+    particlePool = std::make_unique<ParticlePool>(screenTexture.texture);
 }
 
-void UpdateGame() {
-    DrawText("Game Updating...", 190, 260, 20, DARKBLUE);
+void Game::update()
+{
+    particlePool->update();
 }
 
-void DrawGame() {
-    DrawText("Hello, Raylib Starter Kit!", 190, 180, 20, DARKBLUE);
-}
+void Game::draw()
+{
+    BeginTextureMode(screenTexture);
 
-void CloseGame() {
-    printf("Game Closed!\n");
+        // Draw all particles
+        particlePool->draw();
+
+        // Draw everything in here
+        DrawRectangle(100, 100, 100, 100, RED);
+
+    EndTextureMode();
+
+    // Draw render texture
+    DrawTexture(screenTexture.texture, 0, 0, WHITE);
 }

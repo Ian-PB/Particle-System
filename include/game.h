@@ -1,9 +1,18 @@
-#ifndef GAME_H
-#define GAME_H
+#pragma once
 
-void InitGame();
-void UpdateGame();
-void DrawGame();
-void CloseGame();
+#include "raylib.h"
+#include "stdio.h"
+#include "../include/ParticleSpawner.h"
 
-#endif // GAME_H
+class Game
+{
+public:
+    void init();
+    void update();
+    void draw();
+
+private:
+    RenderTexture2D screenTexture;
+
+    std::unique_ptr<ParticlePool> particlePool;
+};
